@@ -1,4 +1,24 @@
 function [displ] = hingedDikes(m,obs,nu)
+% =========================================================================
+% This function is part of the:
+% Geodetic Bayesian Inversion Software (GBIS)
+% Software for the Bayesian inversion of geodetic data.
+% Copyright: Marco Bagnardi, 2018
+%
+% Create a 'hinged' dike by connecting two okada models together via a
+% shared top-bottom edge
+%
+% Email: gbis.software@gmail.com
+%
+% Reference: 
+% Bagnardi M. & Hooper A, (2018). 
+% Inversion of surface deformation data for rapid estimates of source 
+% parameters and uncertainties: A Bayesian approach. Geochemistry, 
+% Geophysics, Geosystems, 19. https://doi.org/10.1029/2018GC007585
+%
+% The function may include third party software.
+% =========================================================================
+% Last update: 8 August, 2018 - Hinged Dyke
 
 % Coordinates of upper dike
 X_dike = m(1); %

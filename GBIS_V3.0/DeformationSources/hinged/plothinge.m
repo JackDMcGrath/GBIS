@@ -5,6 +5,8 @@ function plothinge(m)
 % Software for the Bayesian inversion of geodetic data.
 % Copyright: Marco Bagnardi, 2018
 %
+% Script for only plotting the geometry of hinged okada models
+%
 % Email: gbis.software@gmail.com
 %
 % Reference: 

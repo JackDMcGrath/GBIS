@@ -5,6 +5,9 @@ function [displ] = hingedFault(m,obs,nu, drawgeom)
 % Software for the Bayesian inversion of geodetic data.
 % Copyright: Marco Bagnardi, 2018
 %
+% Create a 'hinged' fault by connecting two okada models together via a
+% shared top-bottom edge
+%
 % Email: gbis.software@gmail.com
 %
 % Reference: 
@@ -15,9 +18,9 @@ function [displ] = hingedFault(m,obs,nu, drawgeom)
 %
 % The function may include third party software.
 % =========================================================================
-% Last update: 8 August, 2018 - Hinged Dyke
-% Last update: 30 July, 2021  - Hinged Fault - Jack McGrath
 % Last Update: 3 March, 2022  - XY Location of surface trace - Jack McGrath
+% Last update: 30 July, 2021  - Hinged Fault - Jack McGrath
+% Last update: 8 August, 2018 - Hinged Dyke
 
 if nargin == 3
     drawgeom=0;
