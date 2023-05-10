@@ -17,16 +17,19 @@ function U = pennySource(m,obs,nu)
 % This function is part of the:
 % Geodetic Bayesian Inversion Software (GBIS)
 % Software for the Bayesian inversion of geodetic data.
-% Markov chain Monte Carlo algorithm incorporating the Metropolis alghoritm
-% (e.g., Mosegaard & Tarantola, JGR,(1995).
+% Copyright: Marco Bagnardi, 2018
 %
-% by Marco Bagnardi and Andrew Hooper (COMET, University of Leeds)
-% Email: M.Bagnardi@leeds.ac.uk
-% Reference: TBA (Bagnardi and Hooper, in prep.)
+% Email: gbis.software@gmail.com
 %
-% The function uses third party software.
+% Reference: 
+% Bagnardi M. & Hooper A, (2018). 
+% Inversion of surface deformation data for rapid estimates of source 
+% parameters and uncertainties: A Bayesian approach. Geochemistry, 
+% Geophysics, Geosystems, 19. https://doi.org/10.1029/2018GC007585
+%
+% The function may include third party software.
 % =========================================================================
-% Last update: 10/05/2017
+% Last update: 8 August, 2018
 %%
 % Assign values in m to model parameters
 x0 = m(1);
