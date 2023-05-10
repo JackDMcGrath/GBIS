@@ -6,7 +6,8 @@
    Record of revisions:
 
    Date          Programmer            Description of Change
-   ====          ==========            =====================
+   ====          ==========            ====================
+   01/04/2021    Andy Hooper           For dips very close to pi/2, treat as pi/2
    10/28/2000    Peter Cervelli        Removed seldom used 'reference station' option; improved
                                        detection of dip = integer multiples of pi/2.
    09/01/2000    Peter Cervelli        Fixed a bug that incorrectly returned an integer absolute value
@@ -152,7 +153,7 @@ void Disloc(double *pOutput, double *pModel, double *pCoords, double nu, int Num
                continue;
           }
 
-          if (fabs(cd)<2.2204460492503131e-16)
+          if (fabs(cd)<1e-4)
           {
                cd=0;
                if (sd>0)
