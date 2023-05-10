@@ -5,6 +5,10 @@ function [displ] = hingedFaultWithOffset(m,obs,nu, drawgeom)
 % Software for the Bayesian inversion of geodetic data.
 % Copyright: Marco Bagnardi, 2018
 %
+% Create a 'hinged' fault by connecting two okada models together via a
+% shared top-bottom edge, allowing a horizontal fault offset (ie locked
+% portion contains a different dip)
+%
 % Email: gbis.software@gmail.com
 %
 % Reference: 
