@@ -12,11 +12,11 @@ function plotGPSDataModel(gps, geo, invpar, invResults, modelinput, saveName, sa
 %
 % by Marco Bagnardi and Andrew Hooper (COMET, University of Leeds)
 % Email: M.Bagnardi@leeds.ac.uk
-% Reference: TBA (Bagnardi and Hooper, in prep.)
+% Reference: Bagnardi and Hooper, 2018
 %
 % The function uses third party software.
 % =========================================================================
-% Last update: 09/05/2017
+% Last update: 11/05/2023
 %%
 
 if nargin < 8
@@ -30,8 +30,8 @@ obsGPS = [obsGPS; zeros(1,size(obsGPS,2))]; % Add zeros to third column of obser
 nObsGPS = size(obsGPS,2); % Determine number of entries in GPS observation matrix
 
 % Display GPS vectors
-scalell = [max(obsGPS(1,:))-5000; min(obsGPS(2,:))+5000; 0]; % add coordinates of legend
-hscalebar = abs(max(round(max(abs(gps.displacements(1:2,:)))/3,3))); % Determine length of scalebar
+scalell = [max(obsGPS(1,:))+5000; min(obsGPS(2,:))-5000; 0]; % add coordinates of legend
+hscalebar = max(round(max(abs(gps.displacements(1:2,:)')),3)); % Determine length of scalebar
 vscalebar = round(max(abs(gps.displacements(3,:))),3); % Determine length of scalebar
 
 %% Generate plot
@@ -46,10 +46,10 @@ end
 figure('Position', [1, 1, 1200, 1000],'Visible',vis);
 subplot(1,2,1)
 hold on
-% figure('Visible',vis);
+plot(obsGPS(1,:), obsGPS(2,:), 'k.', 'MarkerSize', 10)
 quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)], [gps.displacements(1,:),-hscalebar], [gps.displacements(2,:),0], 1, ...
 'Color','b','LineWidth',1,'MaxHeadSize',0.03);
-quiver(obsGPS(1,:), obsGPS(2,:), gps.displacements(1,:), gps.displacements(2,:), 1, ...
+quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)-1e4], [gps.displacements(1,:),-hscalebar], [gps.displacements(2,:),0], 1, ...
     'Color','k','LineWidth',1,'MaxHeadSize',0.03);%,'Marker','s')
 axis equal;
 ax = gca;
@@ -63,7 +63,7 @@ ylabel('Y distance from local origin (m)')
 title('GPS horizontal displacements (data:black - model:red)')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+5000,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
@@ -116,7 +116,7 @@ elseif find(strcmp(invpar.model,'DHIN')) ~= 0
 end
 
 % Plot modelled displacements (Horizontal)
-quiver(obsGPS(1,:),obsGPS(2,:),modGPS(1,:),modGPS(2,:),1,'Color','r','LineWidth',1,'MaxHeadSize',0.03)%,'Marker','s')
+quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)-1e4],[modGPS(1,:),-hscalebar],[modGPS(2,:),0],1,'Color','r','LineWidth',1,'MaxHeadSize',0.03)%,'Marker','s')
 
 if  size(faults,2)>0
     for ii=1:size(faults,2)
@@ -147,10 +147,11 @@ if  size(points,2)>0
 end
 
 subplot(1,2,2)
-hold on 
+hold on
+plot(obsGPS(1,:), obsGPS(2,:), 'k.', 'MarkerSize', 10)
 quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)], [gps.displacements(1,:)-modGPS(1,:), -hscalebar], [gps.displacements(2,:)-modGPS(2,:), 0], 1, ...
     'Color','b','LineWidth',1,'MaxHeadSize',0.03);%,'Marker','s')
-quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),min(obsGPS(2,:))-20000], [gps.displacements(1,:)-modGPS(1,:), -hscalebar], [gps.displacements(2,:)-modGPS(2,:),0], 1, ...
+quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)-1e4], [gps.displacements(1,:)-modGPS(1,:), -hscalebar], [gps.displacements(2,:)-modGPS(2,:),0], 1, ...
     'Color','k','LineWidth',1,'MaxHeadSize',0.03);%,'Marker','s')
 
 axis equal;
@@ -165,7 +166,7 @@ ylabel('Y distance from local origin (m)')
 title('Horizontal Residuals')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+5000,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
@@ -179,9 +180,10 @@ drawnow
 figure('Position', [1, 1, 1200, 1000],'Visible',vis);
 subplot(1,2,1)
 hold on
+plot(obsGPS(1,:), obsGPS(2,:), 'k.', 'MarkerSize', 10)
 quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)], [zeros(size(gps.displacements(1,:))),-vscalebar], [gps.displacements(3,:),0], 1, ...
 'Color','b','LineWidth',1,'MaxHeadSize',0.03);
-quiver(obsGPS(1,:), obsGPS(2,:), zeros(size(gps.displacements(1,:))), gps.displacements(3,:), 1, ...
+quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)-1e4], [zeros(size(gps.displacements(1,:))),-vscalebar], [gps.displacements(3,:),0], 1, ...
     'Color','k','LineWidth',1,'MaxHeadSize',0.03);%,'Marker','s')
 
 axis equal;
@@ -196,12 +198,12 @@ ylabel('Y distance from local origin (m)')
 title('GPS vertical displacements (data:black - model:red)')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+5000,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebarobsGPS(2,end)+2000,[num2str(scalebar*1000),' mm'], 'HorizontalAlignment','Right')
+text(scalell(1), scalell(2)-1500,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
 
-quiver(obsGPS(1,:),obsGPS(2,:),zeros(size(modGPS(1,:))),modGPS(3,:),1,'Color','r','LineWidth',1,'MaxHeadSize',0.03)%,'Marker','s')
+quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)-1e4], [zeros(size(modGPS(1,:))), -vscalebar],[modGPS(3,:),0],1,'Color','r','LineWidth',1,'MaxHeadSize',0.03)%,'Marker','s')
 if  size(faults,2)>0
     for ii=1:size(faults,2)
         if strcmpi(invpar.model{ii},'FAUL') || strcmpi(invpar.model{ii},'DIKE') || strcmpi(invpar.model{ii},'SILL') || strcmpi(invpar.model{ii},'BACK')
@@ -234,9 +236,10 @@ end
 subplot(1,2,2)
 % figure('Visible',vis);
 hold on
+plot(obsGPS(1,:), obsGPS(2,:), 'k.', 'MarkerSize', 10)
 quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)], [zeros(size(gps.displacements(1,:))), -vscalebar], [gps.displacements(3,:)-modGPS(3,:),0], 1, ...
     'Color','b','LineWidth',1,'MaxHeadSize',0.03);%,'Marker','s')
-quiver([obsGPS(1,:),max(obsGPS(1,:))+20000], [obsGPS(2,:),scalell(2)], [zeros(size(gps.displacements(1,:))), -vscalebar], [gps.displacements(3,:)-modGPS(3,:),0], 1, ...
+quiver([obsGPS(1,:),scalell(1)], [obsGPS(2,:),scalell(2)-1e4], [zeros(size(gps.displacements(1,:))), -vscalebar], [gps.displacements(3,:)-modGPS(3,:),0], 1, ...
     'Color','k','LineWidth',1,'MaxHeadSize',0.03);%,'Marker','s')
 axis equal;
 ax = gca;
@@ -250,7 +253,7 @@ ylabel('Y distance from local origin (m)')
 title('Vertical Residuals')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+5000,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)

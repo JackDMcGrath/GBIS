@@ -13,11 +13,11 @@ function plotInSARDataModelResidual(insar, geo, invpar, invResults, modelinput, 
 %
 % by Marco Bagnardi and Andrew Hooper (COMET, University of Leeds)
 % Email: M.Bagnardi@leeds.ac.uk
-% Reference: TBA (Bagnardi and Hooper, in prep.)
+% Reference: Bagnardia and Hooper, 2018
 %
 % The function uses third party software.
 % =========================================================================
-% Last update: 09/05/2017
+% Last update: 10/05/2023
 %%
 
 if nargin < 9
@@ -46,7 +46,7 @@ for i=1:length(insar)
     
     convertedPhase = (loadedData.Phase/(4*pi))*insar{i}.wavelength;    % Convert phase from radians to m
     los = -convertedPhase;  % Convert phase from cm to Line-of-sigth displacement in m
-    if loadedData.Incidence(1)==90 % So west and south are positive in scatter plots
+    if loadedData.Incidence(1)==90 % So west and south are positive in scatter plots for ENU fields
         plot_data{i}.los = -los';
     else
         plot_data{i}.los = los';
@@ -106,12 +106,11 @@ for i=1:length(insar)
     % Extract filename to be included in figure name
     [pathstr,name,ext] = fileparts(insar{i}.dataPath);
     load('vik.mat')
-    fprintf('Wavelength / 1000. Change if using actual InSAR\n')
     [vikUw.redToBlue]=crop_cmap(vik,[min(min(los),min(modLos))  max(max(los),max(modLos))],0);
     % Display wrapped DATA interferogram at 5.6 cm wavelength
     figure('Position', [1, 1, 1200, 1000],'Visible',vis);
     ax1 = subplot(2,3,1);
-    plotInsarWrapped(xy,los, insar{i}.wavelength*1e-3, cmap, 'DATA');
+    plotInsarWrapped(xy,los, insar{i}.wavelength, cmap, 'DATA');
     freezeColors
     
     % Display DATA unwrapped interferogram
@@ -124,7 +123,7 @@ for i=1:length(insar)
     
     % Display MODEL wrapped interferogram at 5.6 cm wavelength
     ax3=subplot(2,3,2);
-    plotInsarWrapped(xy,modLos',insar{i}.wavelength*1e-3,  cmap, 'MODEL');
+    plotInsarWrapped(xy,modLos',insar{i}.wavelength,  cmap, 'MODEL');
     colormap(ax3,cmap.seismo)
     freezeColors
     
@@ -138,7 +137,7 @@ for i=1:length(insar)
     % Display RESIDUAL wrapped interferogram at 5.6 cm wavelength
     residual = los-modLos';
     ax5=subplot(2,3,3);
-    plotInsarWrapped(xy,residual, insar{i}.wavelength*1e-3, cmap, 'RESIDUAL');
+    plotInsarWrapped(xy,residual, insar{i}.wavelength, cmap, 'RESIDUAL');
     freezeColors
     
     % Display RESIDUAL unwrapped interferogram
@@ -266,12 +265,16 @@ try
             U_edges=round(min(vresid(i,:)):b:max(vresid(i,:))); if size(U_edges,2)==1; U_edges(2)=U_edges+b; end
             histogram(vresid(i,:),U_edges,'FaceColor','g')
             label{i}=sprintf('Up- Mean: %.1f, Std: %.1f',mean(vresid(i,:)),std(vresid(i,:)));
+        else
+            edges=round(min(vresid(i,:)):b:max(vresid(i,:))); if size(edges,2)==1; edges(2)=edges+b; end
+            histogram(vresid(i,:),edges)
+            label{i}=sprintf('LOS- Mean: %.1f, Std: %.1f',mean(vresid(i,:)),std(vresid(i,:)));
         end
     end
     legend(label,'Location','NorthWest')
     
     xlabel('Residual (mm)')
-    title('Residual: Observed GPS - Modelled GPS')
+    title('Residual: Observed InSAR - Modelled InSAR')
     
     if saveflag=='y'
         print(gcf,[outputDir,'/Figures/InSAR_Data_Model_hist'],'-dpng')

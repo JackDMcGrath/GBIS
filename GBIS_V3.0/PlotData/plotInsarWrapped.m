@@ -44,10 +44,10 @@ function plotInsarWrapped(xy, los, wavelength, cmap, name)
     ax.Box = 'on';
     ax.LineWidth = 1.0;
     ax.GridLineStyle = '--';
-    cbar = colorbar; ylabel(cbar,'Line-of-sight displacement m','FontSize', 14); 
-    xlabel('X distance from local origin (m)','FontSize', 14)
-    ylabel('Y distance from local origin (m)','FontSize', 14)
-    t = title(['Wrapped InSAR Data: ', name],'FontSize', 18);
+    cbar = colorbar; ylabel(cbar,'LOS displacement m','FontSize', 14); 
+    xlabel('X distance from origin (m)','FontSize', 14)
+    ylabel('Y distance from origin (m)','FontSize', 14)
+    t = title(['Wrapped ', name],'FontSize', 18);
     set(t,'Position',get(t,'Position')+[0 1000 0]);
     drawnow
 
