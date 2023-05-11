@@ -106,12 +106,11 @@ for i=1:length(insar)
     % Extract filename to be included in figure name
     [pathstr,name,ext] = fileparts(insar{i}.dataPath);
     load('vik.mat')
-    fprintf('Wavelength / 1000. Change if using actual InSAR\n')
     [vikUw.redToBlue]=crop_cmap(vik,[min(min(los),min(modLos))  max(max(los),max(modLos))],0);
     % Display wrapped DATA interferogram at 5.6 cm wavelength
     figure('Position', [1, 1, 1200, 1000],'Visible',vis);
     ax1 = subplot(2,3,1);
-    plotInsarWrapped(xy,los, insar{i}.wavelength*1e-3, cmap, 'DATA');
+    plotInsarWrapped(xy,los, insar{i}.wavelength, cmap, 'DATA');
     freezeColors
     
     % Display DATA unwrapped interferogram
@@ -124,7 +123,7 @@ for i=1:length(insar)
     
     % Display MODEL wrapped interferogram at 5.6 cm wavelength
     ax3=subplot(2,3,2);
-    plotInsarWrapped(xy,modLos',insar{i}.wavelength*1e-3,  cmap, 'MODEL');
+    plotInsarWrapped(xy,modLos',insar{i}.wavelength,  cmap, 'MODEL');
     colormap(ax3,cmap.seismo)
     freezeColors
     
@@ -138,7 +137,7 @@ for i=1:length(insar)
     % Display RESIDUAL wrapped interferogram at 5.6 cm wavelength
     residual = los-modLos';
     ax5=subplot(2,3,3);
-    plotInsarWrapped(xy,residual, insar{i}.wavelength*1e-3, cmap, 'RESIDUAL');
+    plotInsarWrapped(xy,residual, insar{i}.wavelength, cmap, 'RESIDUAL');
     freezeColors
     
     % Display RESIDUAL unwrapped interferogram
