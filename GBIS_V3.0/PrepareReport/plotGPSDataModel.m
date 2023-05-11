@@ -31,7 +31,7 @@ nObsGPS = size(obsGPS,2); % Determine number of entries in GPS observation matri
 
 % Display GPS vectors
 scalell = [max(obsGPS(1,:))+5000; min(obsGPS(2,:))-5000; 0]; % add coordinates of legend
-hscalebar = abs(max(round(max(abs(gps.displacements(1:2,:)))/3,3))); % Determine length of scalebar
+hscalebar = max(round(max(abs(gps.displacements(1:2,:)')),3)); % Determine length of scalebar
 vscalebar = round(max(abs(gps.displacements(3,:))),3); % Determine length of scalebar
 
 %% Generate plot
@@ -63,7 +63,7 @@ ylabel('Y distance from local origin (m)')
 title('GPS horizontal displacements (data:black - model:red)')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+1500,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
@@ -166,7 +166,7 @@ ylabel('Y distance from local origin (m)')
 title('Horizontal Residuals')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+1500,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(hscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
@@ -198,7 +198,7 @@ ylabel('Y distance from local origin (m)')
 title('GPS vertical displacements (data:black - model:red)')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+1500,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
@@ -253,7 +253,7 @@ ylabel('Y distance from local origin (m)')
 title('Vertical Residuals')
 xlim([min(obsGPS(1,:))-10000 max(obsGPS(1,:))+10000]);
 ylim([min(obsGPS(2,:))-10000 max(obsGPS(2,:))+10000]);
-text(scalell(1), scalell(2)+1500,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
+text(scalell(1), scalell(2)-1500,[num2str(vscalebar*1000),' mm'], 'HorizontalAlignment','Right') % Add scalebar
 drawnow
 hold on
 plot(fault(1,:),fault(2,:),'r','LineWidth',2)
