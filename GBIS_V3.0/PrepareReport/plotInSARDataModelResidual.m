@@ -13,11 +13,11 @@ function plotInSARDataModelResidual(insar, geo, invpar, invResults, modelinput, 
 %
 % by Marco Bagnardi and Andrew Hooper (COMET, University of Leeds)
 % Email: M.Bagnardi@leeds.ac.uk
-% Reference: TBA (Bagnardi and Hooper, in prep.)
+% Reference: Bagnardia and Hooper, 2018
 %
 % The function uses third party software.
 % =========================================================================
-% Last update: 09/05/2017
+% Last update: 10/05/2023
 %%
 
 if nargin < 9
