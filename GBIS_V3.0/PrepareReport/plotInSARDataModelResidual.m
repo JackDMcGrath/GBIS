@@ -46,7 +46,7 @@ for i=1:length(insar)
     
     convertedPhase = (loadedData.Phase/(4*pi))*insar{i}.wavelength;    % Convert phase from radians to m
     los = -convertedPhase;  % Convert phase from cm to Line-of-sigth displacement in m
-    if loadedData.Incidence(1)==90 % So west and south are positive in scatter plots
+    if loadedData.Incidence(1)==90 % So west and south are positive in scatter plots for ENU fields
         plot_data{i}.los = -los';
     else
         plot_data{i}.los = los';
@@ -265,12 +265,16 @@ try
             U_edges=round(min(vresid(i,:)):b:max(vresid(i,:))); if size(U_edges,2)==1; U_edges(2)=U_edges+b; end
             histogram(vresid(i,:),U_edges,'FaceColor','g')
             label{i}=sprintf('Up- Mean: %.1f, Std: %.1f',mean(vresid(i,:)),std(vresid(i,:)));
+        else
+            edges=round(min(vresid(i,:)):b:max(vresid(i,:))); if size(edges,2)==1; edges(2)=edges+b; end
+            histogram(vresid(i,:),edges)
+            label{i}=sprintf('LOS- Mean: %.1f, Std: %.1f',mean(vresid(i,:)),std(vresid(i,:)));
         end
     end
     legend(label,'Location','NorthWest')
     
     xlabel('Residual (mm)')
-    title('Residual: Observed GPS - Modelled GPS')
+    title('Residual: Observed InSAR - Modelled InSAR')
     
     if saveflag=='y'
         print(gcf,[outputDir,'/Figures/InSAR_Data_Model_hist'],'-dpng')
