@@ -1,3 +1,5 @@
+NOTE: I DO NOT RECOMMEND USING THIS VERSION YET - IT IS STILL COMPILING MULTIPLE PEOPLES CONTRIBUTIONS, AND IS A BIT OF A MESS. RECOMMEND USING THE ORIGINAL GBIS V1.0 https://comet.nerc.ac.uk/gbis/
+
 # GBIS
 The open-source Geodetic Bayesian Inversion Software (GBIS) allows the user to perform the inversion of Interferometric Synthetic Aperture Radar (InSAR) and/or Global Positioning System (GPS) data to estimate deformation source parameters (Bagnardi and Hooper, 2018). The inversion software uses a Markov-chain Monte Carlo algorithm, incorporating the Metropolis-Hastings algorithm [e.g., Hastings, 1970; Mosegaard and Tarantola, 1995], to find the posterior probability distribution of the different source parameters.
 
